@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>HLS Sample Player Flowplayer</title>
+<script type="text/javascript" src="flowplayer-3.2.12.min.js"></script>
+<script type="text/javascript" src="flowplayer.ipad-3.2.12.min.js"></script>
+</head>
+
+<body>
+<h1>HLS Sample Player Flowplayer</h1>
+<p>Lei Xiaohua<br/>
+	<a href="http://blog.csdn.net/leixiaohua1020">http://blog.csdn.net/leixiaohua1020</a><br/>
+	leixiaohua1020@126.com</p>
+<!-- player container-->
+<a style="display: block; width: 660px; height: 350px;" id="flashls_vod">
+</a>
+
+<!-- Flowplayer installation and configuration -->
+<script type="text/javascript">
+flowplayer("flashls_vod", "flowplayer.swf", {
+	// configure the required plugins
+	plugins: {
+		flashls: {
+			url: 'flashlsFlowPlayer.swf',
+		}
+	},
+	clip: {
+		url: "http://stream.flowplayer.org/drive.m3u8",
+		//url: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8",
+		//live: true,
+		urlResolvers: "flashls",
+		provider: "flashls"
+	}
+}).ipad();
+</script>
+<p>
+
+</p>
+
+</body>
+</html>

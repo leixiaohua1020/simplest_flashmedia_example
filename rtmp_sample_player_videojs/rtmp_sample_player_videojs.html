@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RTMP Sample Player Videojs</title>
+  <!-- Chang URLs to wherever Video.js files will be hosted -->
+  <link href="video-js.css" rel="stylesheet" type="text/css">
+  <!-- video.js must be in the <head> for older IEs to work. -->
+  <script src="video.js"></script>
+  <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -->
+  <script>
+    videojs.options.flash.swf = "video-js.swf";
+  </script>
+</head>
+<body>
+<h1>RTMP Sample Player Videojs</h1>
+<p>Lei Xiaohua<br/>
+	<a href="http://blog.csdn.net/leixiaohua1020">http://blog.csdn.net/leixiaohua1020</a><br/>
+	leixiaohua1020@126.com</p>
+  <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}">
+    <source src="rtmp://wx.cnrmall.com/live/flv" type="rtmp/flv"/>
+	
+    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+  </video>
+
+</body>
+</html>

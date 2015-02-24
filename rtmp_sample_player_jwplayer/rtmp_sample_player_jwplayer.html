@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>RTMP Sample Player JWPlayer</title>
+	<script type='text/javascript' src='jwplayer.js'></script>
+</head>
+<body>
+	<h1>RTMP Sample Player JWPlayer</h1>
+	<p>Lei Xiaohua<br/>
+	<a href="http://blog.csdn.net/leixiaohua1020">http://blog.csdn.net/leixiaohua1020</a><br/>
+	leixiaohua1020@126.com</p>
+	
+	<div id='mediaspace'>This text will be replaced</div>
+	<script type='text/javascript'>
+	  jwplayer('mediaspace').setup({
+		'flashplayer': 'player.swf',
+		'file': 'flv',
+		'streamer': 'rtmp://wx.cnrmall.com/live',
+		'controlbar': 'bottom',
+		'width': '640',
+		'height': '360'
+	  });
+	</script>
+	<p>		
+		Sample RTMP URL (Live) is "rtmp://wx.cnrmall.com/live/flv"
+	</p>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<manifest xmlns="http://ns.adobe.com/f4m/1.0">
+
+<id>Dynamic Streaming</id>
+
+<baseURL>rtmp://localhost/vod/</baseURL>
+
+<mimeType>video/mp4</mimeType>
+  
+<streamType>recorded</streamType>
+  
+<media url="mp4:sample1_150kbps.f4v" bitrate="150"/>
+  
+<media url="mp4:sample1_500kbps.f4v" bitrate="500"/>
+  
+<media url="mp4:sample1_700kbps.f4v" bitrate="700"/>
+  
+<media url="mp4:sample1_1000kbps.f4v" bitrate="1000"/>
+  
+<media url="mp4:sample1_1500kbps.f4v" bitrate="1500"/>
+  
+</manifest>

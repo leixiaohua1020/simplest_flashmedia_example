@@ -1,0 +1,893 @@
+<!--
+/*
+ * (C) Copyright 2011 Adobe Systems Incorporated. All Rights Reserved.
+ *
+ * NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the 
+ * terms of the Adobe license agreement accompanying it.  If you have received this file from a 
+ * source other than Adobe, then your use, modification, or distribution of it requires the prior 
+ * written permission of Adobe. 
+ * THIS CODE AND INFORMATION IS PROVIDED "AS-IS" WITHOUT WARRANTY OF
+ * ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+ * PARTICULAR PURPOSE.
+ *
+ *  THIS CODE IS NOT SUPPORTED BY Adobe Systems Incorporated.
+ *
+ */
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Adobe Flash Media Server</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<style type="text/css">
+td img {display: block;}body {
+	background-color: #191919;
+}
+a:link {
+	text-decoration: none;
+	color: #F00;
+}
+a:hover {
+	text-decoration: underline;
+	color: #F00;
+}
+a:visited {
+	text-decoration: none;
+	color: #F00;
+}
+a:active {
+	text-decoration: none;
+	color: #F00;
+}
+.style22 {
+	color: #666666;
+}
+.style23 {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 12px;
+}
+.style31 {
+	font-family: "Arial";
+	color: #999999;
+	font-size: 12px;
+	font-weight: bold;
+}
+.style34 {
+	font-family: "Arial";
+}
+.style24 {	font-size: 11px;
+	color: #999999;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.style62 {
+	font-size: 12px; color: #999999; 
+	font-family: "myriad Pro"; 
+}
+.style67 {
+	font-family: "myriad Pro";
+	color: #999999;
+	font-size: 12px;
+	font-weight: bold;
+}
+.style69 {
+	font-family: "Arial";
+	color: #999999;
+	font-weight: bold;
+}
+.style1 {	
+	font-family: Arial, Helvetica, sans-serif;
+	color: #999999;
+	font-size: 14px;
+	font-weight: bold;
+}
+.style3 {
+	font-family: "Arial";
+	font-size: 12px;
+	line-height: normal;
+	height: 10px;
+}
+.style71 {
+	font-family: "myriad Pro";
+}
+.style73 {
+	font-family: Arial; 
+	color: #999999; 
+	font-size: 12px; 
+	font-weight: bold; 
+}
+.style74 {
+	font-size: 12px; 
+	color: #999999; 
+	font-family: Arial; 
+}
+.style75 {
+	font-family: Arial;
+	color: #CCC;
+	font-size: 12px;
+	font-weight: bold;
+}
+.style76 {
+	font-size: 12px;
+	font-family: Arial;
+	color: #FF0000;
+}
+.style81 {
+	font-family: Arial;
+}
+.style82 {
+	color: #999999; 
+	font-size: 12px;
+}
+.style83 {
+	font-size: 12px; 
+	font-weight: bold; 
+	color: #999999;
+}
+</style>
+
+<!-- functionality -->
+<script type="text/javascript" src="scripts/swfobject.js"></script>
+    <script language="javascript">
+
+		var queryParameters = new Array();
+          var flashVars = "";
+		var tag = "";
+		var url = "";
+        
+        window.onload = function ()
+        {
+ 			document.getElementById( 'inputURL' ).value = queryParameters['source'];
+			document.getElementById('embedField').innerHTML = tag;
+
+			for(var i=1 ; i<=10;i++)
+			{
+				var ids = String("sel"+i.toString());
+
+				document.getElementById( ids ).style.visibility = "hidden";
+				document.getElementById( ids ).className = "style76";
+			}
+
+			// mark the entry for that index
+			if(queryParameters['idx'] != "")
+			{
+				document.getElementById("td" + queryParameters['idx'] ).className = "style75";
+				document.getElementById("sel" + queryParameters['idx'] ).style.visibility = "visible";
+			}
+
+		}
+
+        function initialise() 
+        {
+            
+
+			function getUrlParam( name )
+			{
+				  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+				  var regexS = "[\\?&]"+name+"=([^&#]*)";
+				  var regex = new RegExp( regexS );
+				  var results = regex.exec( window.location.href );
+				  if( results == null )
+						return "";
+				  else
+						return unescape( results[1] );
+			}
+
+			queryParameters['source'] = getUrlParam('source');
+			queryParameters['type'] = getUrlParam('type');
+			queryParameters['idx'] = getUrlParam('idx');
+
+			if( queryParameters['source'] == "" )
+				queryParameters['source'] = "rtmp://localhost/vod/mp4:sample1_500kbps.f4v";
+			
+			if( queryParameters['type'] == "" )
+				queryParameters['type'] = "recorded";
+				
+			if( queryParameters['idx'] == "" )
+				queryParameters['idx'] = "2";
+
+			flashVars += "&src=";
+            flashVars += queryParameters['source'];
+
+            flashVars += "&autoHideControlBar=";
+            flashVars += unescape("true");
+
+            flashVars += "&streamType=";
+            flashVars += queryParameters['type'];
+
+            flashVars += "&autoPlay=";
+            flashVars += unescape("true");
+		  
+		  flashVars += "&verbose=";
+		  flashVars += "true";
+
+            var soFlashVars = {
+                src: queryParameters['source'],
+			 streamType: queryParameters['type'],
+                autoPlay: "true",
+                controlBarAutoHide: "true",
+                controlBarPosition: "bottom"
+            };
+
+ 			tag = "&lt;object width='640' height='377' id='StrobeMediaPlayback' name='StrobeMediaPlayback' type='application/x-shockwave-flash' classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' &gt;&lt;param name='movie' value='swfs/StrobeMediaPlayback.swf' /&gt; &lt;param name='quality' value='high' /&gt; &lt;param name='bgcolor' value='#000000' /&gt; &lt;param name='allowfullscreen' value='true' /&gt; &lt;param name='flashvars' value= '"+					
+			flashVars+"'/&gt;&lt;embed src='swfs/StrobeMediaPlayback.swf' width='640' height='377' id='StrobeMediaPlayback' quality='high' bgcolor='#000000' name='StrobeMediaPlayback' allowfullscreen='true' pluginspage='http://www.adobe.com/go/getflashplayer'   flashvars='"+ flashVars +"' type='application/x-shockwave-flash'&gt; &lt;/embed&gt;&lt;/object&gt;";
+
+		<!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. -->
+		var swfVersionStr = "10.3.0";
+		<!-- To use express install, set to playerProductInstall.swf, otherwise the empty string. -->
+		var xiSwfUrlStr = "swfs/playerProductInstall.swf";
+		var params = {};
+		params.quality = "high";
+		params.bgcolor = "#000000";
+		params.allowscriptaccess = "sameDomain";
+		params.allowfullscreen = "true";           
+		var attributes = {};
+		attributes.id = "StrobeMediaPlayback";
+		attributes.name = "StrobeMediaPlayback";
+		attributes.align = "middle";
+		swfobject.embedSWF("swfs/StrobeMediaPlayback.swf", "flashContent", "640", "377", swfVersionStr, xiSwfUrlStr, soFlashVars, params, attributes);
+		<!-- JavaScript enabled so display the flashContent div in case it is not replaced with a swf object. -->
+		swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+        } 
+
+		function playStream()
+		{
+			var url = "source=" + document.getElementById('inputURL').value;
+			var type;
+
+			if(document.getElementById('vodCheckbox').checked==true)
+				type="vod";
+			else
+				type="live";
+
+			url += ("&type=" + type);
+
+			document.getElementById('playBtn').href="videoplayer.html?" + url;
+
+		}
+
+		function checkbox(type)
+		{
+			if(type=="vod")
+			{
+				if(document.getElementById('liveCheckbox').checked==true)
+				{
+					document.getElementById('liveCheckbox').checked=false;
+				}
+			}
+			if(type=="live")
+			{
+				if(document.getElementById('vodCheckbox').checked==true)
+				{
+					document.getElementById('vodCheckbox').checked=false;
+				}
+			}
+		}
+
+		initialise();
+
+    </script>
+
+</head>
+<body>
+ <table width="100" height="" border="0" align="left" cellpadding="0" cellspacing="0">
+<!-- fwtable fwsrc="080715_fms_splash_fireworks.png" fwbase="index.gif" fwstyle="Dreamweaver" fwdocid = "1526025482" fwnested="0" -->
+<tr><td width="41"><img src="images/spacer.gif" width="41" height="1" border="0" alt="" /></td>
+   <td width="3"><img src="images/spacer.gif" width="3" height="1" border="0" alt="" /></td>
+   <td width="647"><img src="images/spacer.gif" width="636" height="1" border="0" alt="" /></td>
+   <td width="361"><img src="images/spacer.gif" width="358" height="1" border="0" alt="" /></td>
+   <td width="44"><img src="images/spacer.gif" width="43" height="1" border="0" alt="" /></td>
+   </tr>
+
+  <tr valign="top">
+    <td rowspan="4" bgcolor="#191919"><img src="images/spacer.gif" width="55" height="50" /></td>
+    <td rowspan="4"></td>
+    <td height="327" colspan="3" bgcolor="#191919"><map name="index_r4_c3MapMap" id="index_r4_c3MapMap">
+        <area shape="rect" coords="32,160,308,181" href="fms_adminConsole.htm" target="_blank" />
+        <area shape="rect" coords="316,161,433,181" href="#" />
+      </map>
+      <map name="index_r2_c4MapMap" id="index_r2_c4MapMap">
+        <area shape="rect" coords="20,21,55,61" href="http://www.adobe.com" target="_blank" />
+      </map>
+      <map name="index_r4_c3Map" id="index_r4_c3Map">
+        <area shape="rect" coords="32,160,308,181" href="fms_adminConsole.htm" target="_blank" />
+        <area shape="rect" coords="316,161,433,181" href="#" />
+      </map>
+      <map name="index_r2_c4Map" id="index_r2_c4Map">
+        <area shape="rect" coords="20,21,55,61" href="http://www.adobe.com" target="_blank" />
+      </map>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="61" colspan="4" bgcolor="#191919"><table width="100" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="93%"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                        
+                        <tr>
+                          <td colspan="4" align="left" bgcolor="#191919"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td><img src="images/top_bar_border.gif" width="1000" height="15" /></td>
+                            </tr>
+                            <tr>
+                              <td><img src="images/title.gif" width="1000" height="66" border="0" usemap="#Map" /></td>
+                            </tr>
+                          </table></td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" align="left" bgcolor="#191919"><img src="images/canvas.gif" alt="" name="index_r4_c3" width="1000" height="39" border="0" id="index_r4_c3"/></td>
+                        </tr>
+                        
+                        <tr>
+                          <td colspan="4" align="left" bgcolor="#191919"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="64%"><table width="65%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+								<!-- Here goes the StrobeMediaPlayback -->
+                                  <td valign="top">
+        <!-- SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough 
+			 JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
+			 when JavaScript is disabled.
+		-->
+
+        <div id="flashContent">
+        	<p>To view this page ensure that Adobe Flash Player version 10.3.0 or greater is installed.</p>
+			<script type="text/javascript"> 
+				var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://"); 
+				document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
+								+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
+			</script> 
+        </div>
+			<noscript>
+				<a href="http://www.adobe.com/go/getflashplayer/" style="color:black"><img src="images/ERROR_getFlashPlayer.gif" width="640" height="377" /></a>
+				
+			</noscript>				
+								  </td>
+                                </tr>
+                              </table></td>
+                              <td width="36%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td width="359" height="186" background="images/upperright_03.gif"><table width="358" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                      <td width="35" colspan="2"><img src="images/spacer.gif" width="20" height="10" /></td>
+                                      <td width="323"><span class="style75">SELECT A VIDEO FROM THE LIST BELOW</span></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="3"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+                                    <tr>
+                                      <td colspan="2"><img src="images/spacer.gif" width="20" height="10" /></td>
+                                      <td><span class="style75">SOURCE: /applications/vod/media</span></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="3"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+                                    <tr>
+                                      <td><img src="images/spacer.gif" width="20" height="10" /></td>
+									  <td id="sel1"><span class="style74">&gt;</span></td>
+                                      <td id="td1" class="style76"><a href="videoplayer.html?source=rtmp://localhost/vod/mp4:sample1_150kbps.f4v&type=recorded&idx=1">sample1_150kbps.f4v</a></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="3"><img src="images/spacer.gif" width="20" height="10" /></td>
+                                      </tr>
+                                    <tr>
+                                      <td><img src="images/spacer.gif" width="15" height="5" /></td>
+                                      <td id="sel2"><span class="style74">&gt;</span></td>
+                                      <td class="style76" id="td2"> <a href="videoplayer.html?source=rtmp://localhost/vod/mp4:sample1_500kbps.f4v&type=recorded&idx=2">sample1_500kbps.f4v</a></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="3"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+                                    <tr>
+                                      <td><img src="images/spacer.gif" width="20" height="10" /></td>
+									  <td id="sel3"><span class="style74">&gt;</span></td>
+                                      <td id="td3" class="style76"><a href="videoplayer.html?source=rtmp://localhost/vod/mp4:sample1_700kbps.f4v&type=recorded&idx=3">sample1_700kbps.f4v</a></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="3"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+                                    <tr>
+                                      <td><img src="images/spacer.gif" width="20" height="10" /></td>
+									  <td id="sel4"><span class="style74">&gt;</span></td>
+                                      <td id="td4" class="style76"><a href="videoplayer.html?source=rtmp://localhost/vod/mp4:sample1_1000kbps.f4v&type=recorded&idx=4">sample1_1000kbps.f4v</a></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="3"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+                                    <tr>
+                                      <td><img src="images/spacer.gif" width="20" height="10" /></td>
+									  <td id="sel5"><span class="style74">&gt;</span></td>
+                                      <td id="td5" class="style76"><a href="videoplayer.html?source=rtmp://localhost/vod/mp4:sample1_1500kbps.f4v&type=recorded&idx=5">sample1_1500kbps.f4v</a></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="3"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+                                    <tr>
+                                      <td><img src="images/spacer.gif" width="20" height="10" /></td>
+									  <td id="sel6"><span class="style74">&gt;</span></td>
+                                      <td id="td6" class="style76"><a href="videoplayer.html?source=rtmp://localhost/vod/sample&type=recorded&idx=6">sample.flv</a></td>
+                                    </tr>
+                                  </table></td>
+                                </tr>
+                                <tr>
+                                  <td width="359" height="114" background="images/middleright_05.gif"><table width="358" border="0" cellspacing="0" cellpadding="0">
+								    <tr>
+                                      <td colspan="2"><img src="images/spacer.gif" width="20" height="10" /></td>
+                                      <td width="323" class="style75">SOURCE: /webroot/vod</td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="2"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+							   <tr>
+                                      <td><img src="images/spacer.gif" width="20" height="10" /></td>
+									  <td id="sel7"><span class="style74">&gt;</span></td>
+                                      <td id="td7" class="style76"><a href="videoplayer.html?source=hds_sample1_manifest.f4m&type=recorded&idx=7" title="Only works when viewed from localhost.">hds_sample1_manifest.f4m</a></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="2"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+                                    <tr>
+                                    </tr><tr>
+                                      <td><img src="images/spacer.gif" width="20" height="10" /></td>
+									  <td id="sel8"><span class="style74">&gt;</span></td>
+                                      <td id="td8" class="style76"><a href="videoplayer.html?source=rtmp_sample1_manifest.f4m&type=recorded&idx=8" title="Only works when viewed from localhost.">rtmp_sample1_manifest.f4m</a></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="2"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+                                    <tr>
+                                      <td><img src="images/spacer.gif" width="20" height="10" /></td>
+									  <td id="sel9"><span class="style74">&gt;</span></td>
+                                      <td id="td9" class="style76"><a href="videoplayer.html?source=http://localhost/vod/sample2_1000kbps.f4v&type=recorded&idx=9">sample2_1000kbps.f4v (http progressive)</a></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="2"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+                                    <tr>
+                                      <td><img src="images/spacer.gif" width="20" height="10" /></td>
+									  <td id="sel10"><span class="style74">&gt;</span></td>
+                                      <td id="td10" class="style76"><a href="videoplayer.html?source=rtmp://localhost/vod/mp4:sample2_1000kbps.f4v&type=recorded&idx=10">sample2_1000kbps.f4v (rtmp)</a></td>
+                                    </tr>
+
+
+                                  </table></td>
+                                </tr>
+                                <tr>
+                                  <td width="359" height="77" background="images/lowerright_07.gif"><table width="358" border="0" cellspacing="0" cellpadding="0">
+
+                                    <tr>
+                                      <td colspan="2"><img src="images/spacer.gif" width="20" height="10" /></td>
+                                      <td width="322" class="style75">SOURCE: /applications/live</td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="2"><img src="images/spacer.gif" width="20" height="5" /></td>
+                                      </tr>
+                                    <tr>
+                                      <td><img src="images/spacer.gif" width="20" height="10" /></td>
+									  <td id="sel11"><span class="style74">&gt;</span></td>
+                                      <td id="td11" class="style76"><a href="videoplayer.html?source=rtmp://localhost/live/livestream&type=live&idx=11">livestream</a></td>
+                                    </tr>
+                                  </table></td>
+                                </tr>
+                              </table></td>
+                            </tr>
+                          </table></td>
+                        </tr>
+                    </table></td>
+                    <td width="7%">&nbsp;</td>
+                  </tr>
+                </table></td>
+              </tr>
+              
+          </table></td>
+        </tr>
+      </table></td>
+   </tr>
+  <tr>
+    <td colspan="2" valign="top" bgcolor="#191919"><table width="100" border="0" align="left" cellpadding="0" cellspacing="0">
+        <!-- fwtable fwsrc="080715_fms_splash_fireworks.png" fwbase="index.gif" fwstyle="Dreamweaver" fwdocid = "1526025482" fwnested="0" -->
+        <tr>
+          <td colspan="3" valign="top"><img src="images/spacer.gif" width="55" height="40" /></td>
+        </tr>
+        <tr>
+          <td colspan="3" valign="top"><table width="87%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><span class="style69">STREAM YOUR OWN VIDEO</span></td>
+            </tr>
+            <tr>
+              <td bgcolor="#666666"><img src="images/spacer.gif" width="20" height="3" /></td>
+            </tr>
+            
+            <tr>
+              <td><img src="images/spacer.gif" width="55" height="10" /></td>
+            </tr>
+            <tr>
+              <td><table width="1000" border="0" align="left" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="8%"><table width="86" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td align="left"><span class="style73">STREAM URL:</span></td>
+                    </tr>
+                  </table></td>
+                  <td align="left"></td>
+                  <td align="left"><input name="inputURL" type="text" id="inputURL" size="80" maxlength="80" /></td>
+                  <td width="42%" align="left"><table width="100" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="5%" align="left"><img src="images/spacer.gif" width="10" height="10" /></td>
+                      <td width="7%" align="left"><table width="0" >
+                          <tr>
+                            <td align="left"><div align="center">
+                                <input type="checkbox" name="checkbox" id="vodCheckbox" checked onclick="checkbox('vod');" />
+                            </div></td>
+                          </tr>
+                      </table></td>
+                      <td width="2%" align="left"><img src="images/spacer.gif" width="10" height="10" /></td>
+                      <td width="6%" align="left"><div align="center"><span class="style31">VOD</span></div></td>
+                      <td width="5%" align="left"><img src="images/spacer.gif" width="10" height="10" /></td>
+                      <td width="5%" align="left"><div align="center">
+                          <input type="checkbox" name="checkbox2" id="liveCheckbox" onclick="checkbox('live');" />
+                      </div></td>
+                      <td width="2%" align="left"><img src="images/spacer.gif" width="10" height="10" /></td>
+                      <td width="6%" align="left"><span class="style31">LIVE</span></td>
+                      <td width="5%" align="left"><img src="images/spacer.gif" width="10" height="10" /></td>
+                      <td width="27%" align="left"><a id="playBtn" onclick="javascript:playStream();"><img src="images/playstream_10.gif" width="104" height="25" /></a></td>
+                      <td align="left">&nbsp;</td>
+                    </tr>
+                  </table></td>
+                  </tr>
+                <tr>
+                  <td colspan="2">&nbsp;</td>
+                  <td align="left" class="style74">URL Syntax: [protocol]://[servername]/[application]/[codecID:][streamname][.extension]</td>
+                  <td>&nbsp;</td>
+                  </tr>
+                <tr>
+                  <td colspan="4">&nbsp;</td>
+                </tr>
+              </table></td>
+            </tr>
+          </table></td>
+        </tr>
+        <tr>
+          <td colspan="3" valign="top"><table width="100" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="3"><span class="style73"></span></td>
+            </tr>
+            <tr>
+              <td colspan="3"><span class="style75"></span></td>
+            </tr>
+            <tr>
+              <td colspan="3"><span class="style67"><img src="images/spacer.gif" width="56" height="10" /></span></td>
+            </tr>
+            <tr>
+              <td width="32%" valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                
+                <tr>
+                  <td valign="top" class="style73">RTMP STREAMING</td>
+                </tr>
+                <tr>
+                  <td valign="top" class="style75">from the folder: /webroot/vod</td>
+                </tr>
+                
+                <tr>
+                  <td valign="top"><img src="images/spacer.gif" width="40" height="5" border="0" /></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#666666"><img src="images/spacer.gif" width="490" height="3" /></td>
+                </tr>
+                <tr>
+                  <td valign="top"><img src="images/spacer.gif" width="56" height="20" /></td>
+                </tr>
+                <tr>
+                  <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td valign="top" class="style34"><table width="490" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td width="7%" valign="top" class="style74">1)</td>
+                          <td width="93%" class="style74">[<strong>protocol</strong>]: You can use the following protocols: rtmp, rtmpt, rtmpe, rtmpte, rtmps.</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="15" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="style74">2)</td>
+                          <td class="style74">[<strong>servername</strong>]: This is the IP Address or the domain name of your server  (for example, localhost).</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="15" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="style74">3)</td>
+                          <td class="style74">[<strong>application</strong>]: Use "vod" unless you have changed the name of the folder.</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="15" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="style74">4)</td>
+                          <td class="style74">[<strong>codecID</strong>]: </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" valign="top" class="style24"><img src="images/spacer.gif" width="5" height="10" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="style62">&nbsp;</td>
+                          <td class="style74"><blockquote>
+                            <p> For H264/mov/F4V use "mp4:".<br />
+                            For FLV files, do not specify a codecID.</p>
+                            </blockquote></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="15" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="style74">5)</td>
+                          <td class="style74">[<strong>streamname</strong>]: Use the name of your video file. </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" class="style24"><img src="images/spacer.gif" width="5" height="10" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="style74">6)</td>
+                          <td class="style74">[<strong>extension</strong>]:    </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" class="style24"><img src="images/spacer.gif" width="5" height="10" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top" class="style62">&nbsp;</td>
+                          <td class="style74"><blockquote>
+                            <p>For F4V/MP4 files, specify a file extension.<br />
+                              For MP3 and FLV, do not specify a file extension.</p>
+                            </blockquote></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="15" /></td>
+                        </tr>
+                        <tr>
+                          <td class="style62">&nbsp;</td>
+                          <td class="style74"><strong>EXAMPLE URLS</strong></td>
+                        </tr>
+                        <tr>
+                          <td class="style62">&nbsp;</td>
+                          <td class="style74">rtmp://localhost/vod/mp4:mystream.f4v</td>
+                        </tr>
+                        <tr>
+                          <td class="style62">&nbsp;</td>
+                          <td class="style74">rtmpe://192.168.0.1/vod/myvideo</td>
+                        </tr>
+                      </table></td>
+                    </tr>
+                    
+                  </table>                    <span class="style34"></span></td>
+                </tr>
+                <tr>
+                  <td valign="top">&nbsp;</td>
+                </tr>
+                
+              </table></td>
+              <td width="30%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="center" valign="middle"><img src="images/spacer.gif" width="20" height="50" /></td>
+                </tr>
+              </table></td>
+              <td width="38%" valign="top"><table width="100" border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td valign="top" class="style67"><span class="style73">HTTP DYNAMIC STREAMING</span><br /></td>
+                </tr>
+                <tr>
+                  <td valign="top" class="style75">from the folder: /webroot/vod</td>
+                </tr>
+                <tr>
+                  <td valign="top"><img src="images/spacer.gif" width="40" height="5" border="0" /></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#666666"><img src="images/spacer.gif" width="490" height="3" /></td>
+                </tr>
+                <tr>
+                  <td valign="top"><img src="images/spacer.gif" width="56" height="20" /></td>
+                </tr>
+                <tr>
+                  <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td valign="top" class="style34"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td valign="top" class="style34"><table width="489" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td width="7%" valign="top" class="style74">1)</td>
+                                  <td width="93%" class="style74">[<strong>protocol</strong>]: HTTP</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="15" /></td>
+                                </tr>
+                                <tr>
+                                  <td valign="top" class="style74">2)</td>
+                                  <td class="style74">[<strong>server</strong>]: This is the IP Address or the domain name of your server  (for example, localhost).</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="15" /></td>
+                                </tr>
+                                <tr>
+                                  <td valign="top" class="style74">3)</td>
+                                  <td class="style74">[<strong>application</strong>]: </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="15" /></td>
+                                </tr>
+						  <tr>
+						  <td valign="top" class="style62">&nbsp;</td>
+						  <td valign="top" class="style74">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="31%" valign="top" class="style74"><strong>For VOD</strong><br /> Flash: "hds-vod"</td>
+<td width="69%" valign="top" class="style74"><strong>For LIVE</strong><br /> Flash: "/hds-live/livepkgr/_definst_/liveevent/"</td>
+</tr></table>
+</td>
+						  </tr>
+                                <tr>
+                                  <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="15" /></td>
+                                </tr>
+                                <tr>
+                                  <td valign="top" class="style74">4)</td>
+                                  <td class="style74">[<strong>codecID</strong>]: Not required</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" valign="top" class="style62"><img src="images/spacer.gif" width="5" height="10" /></td>
+                                </tr>
+                                <tr>
+                                  <td valign="top" class="style74">5)</td>
+                                  <td class="style74">[<strong>streamname</strong>]: The name of the MP4/F4V media file</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" class="style62"><img src="images/spacer.gif" width="5" height="10" /></td>
+                                </tr>
+                                <tr>
+                                  <td valign="top" class="style74">6)</td>
+                                  <td class="style74">[<strong>extension</strong>]:  The extension of the media file + &quot;.f4m. </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="5" /></td>
+                                </tr>
+                                <tr>
+                                  <td class="style62">&nbsp;</td>
+                                  <td class="style73">EXAMPLE VOD URL</td>
+                                </tr>
+                                <tr>
+                                  <td class="style62">&nbsp;</td>
+                                  <td class="style74">http://localhost/hds-vod/sample1_500kbps.f4v.f4m</td>
+                                </tr>
+						   <tr>
+                                  <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="5" /></td>
+                                </tr>
+						  <tr>
+                                  <td class="style62">&nbsp;</td>
+                                  <td class="style73">EXAMPLE LIVE URL</td>
+                                </tr>
+                                <tr>
+                                  <td class="style62">&nbsp;</td>
+                                  <td class="style74">
+						     http://localhost/hds-live/livepkgr/_definst_/liveevent/livestream.f4m</td>
+                                </tr>
+						   <tr>
+                                  <td colspan="2" class="style62"><img src="images/spacer.gif" width="10" height="5" /></td>
+                                </tr>
+						  <tr>
+                                  <td class="style62">&nbsp;</td>
+                                  <td class="style73">EXAMPLE LIVE PUBLISHING URLS (IN FLASH MEDIA LIVE ENCODER)</td>
+                                </tr>
+                                <tr>
+                                  <td class="style62">&nbsp;</td>
+                                  <td class="style74">
+a.	<strong>FMS Server URL:</strong> rtmp://localhost/livepkgr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<strong>Note:</strong> Publish the stream to the server over the RTMP protocol.<br />
+c.	<strong>Stream Name (Single Bitrate):</strong> 
+livestream?adbe-live-event=liveevent<br />
+d.	<strong>Stream Name (Adaptive Bitrate):</strong> 
+livestream%i?adbe-live-event=liveevent<br />
+
+</td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                          <tr>
+                            <td class="style34">&nbsp;</td>
+                          </tr>
+                        </table></td>
+                      </tr>
+                      
+                    </table>
+                      <span class="style34"></span></td>
+                </tr>
+                
+              </table></td>
+              </tr>
+            
+            <tr>
+              <td colspan="3">&nbsp;</td>
+            </tr>
+          </table>
+            <table width="1000" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td valign="bottom" class="style67"><span class="style1"><span class="style73">EMBED CODE</span><br />
+                </span></td>
+              </tr>
+              <tr>
+                <td valign="top" class="style67"><span class="style1"><img src="images/spacer.gif" width="40" height="5" /></span></td>
+              </tr>
+              <tr>
+                <td bgcolor="#666666" class="style67"><img src="images/spacer.gif" width="306" height="3" /></td>
+              </tr>
+              <tr>
+                <td class="style67">&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="style74">Copy and paste the following code into an HTML file to embed the video player in a web page. Place the HTML page in the /webroot folder. <br />
+                  TIP: If you enter a Stream URL above, this embed code updates automatically. </td>
+              </tr>
+              <tr>
+                <td><table width="1000" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td colspan="5">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td colspan="5" bgcolor="#FFFFFF" class="style3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="1%"><img src="images/spacer.gif" width="15" height="5" /></td>
+                            <td width="97%"  class="style71" id="embedField" >
+                              &lt;object width='640' height='377' id='StrobeMediaPlayback' name='StrobeMediaPlayback' type='application/x-shockwave-flash' classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' &gt;&lt;param name='movie' value='swfs/StrobeMediaPlayback.swf' /&gt; &lt;param name='quality' value='high' /&gt; &lt;param name='bgcolor' value='#000000' /&gt; &lt;param name='allowfullscreen' value='true' /&gt; &lt;param name='flashvars' value='&amp;videoWidth=0&amp;videoHeight=0&amp;dsControl=manual&amp;dsSensitivity=100&amp;serverURL=rtmp://localhost/vod/mp4:sample1_500kbps.f4v&amp;streamType=vod&amp;autoStart=true'/&gt; &lt;embed src='swfs/StrobeMediaPlayback.swf' width='640' height='377' id='StrobeMediaPlayback' quality='high' bgcolor='#000000' name='StrobeMediaPlayback' allowfullscreen='true' pluginspage='http://www.adobe.com/go/getflashplayer 'flashvars='&amp;videoWidth=0&amp;videoHeight=0&amp;dsControl=manual&amp;dsSensitivity=100&amp;serverURL=rtmp://localhost/vod/mp4:sample1_500kbps.f4v&amp;streamType=vod&amp;autoStart=true' type='application/x-shockwave-flash'&gt; &lt;/embed&gt;&lt;/object&gt;</td>
+                            <td width="2%"><img src="images/spacer.gif" width="10" height="5" /></td>
+                          </tr>
+                        </table>
+                          <br /></td>
+                    </tr>
+                    <tr>
+                      <td colspan="5">&nbsp;</td>
+                    </tr>
+                </table></td>
+              </tr>
+            </table>          </td>
+        </tr>
+        <tr>
+          <td width="1012" colspan="3" valign="top">&nbsp;</td>
+        </tr>
+        
+    </table></td>
+   </tr>
+  
+  <tr>
+    <td colspan="2" valign="top" bgcolor="#191919"><table width="1000" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="1000" height="24" valign="middle" background="images/footer_bar.gif"><table width="99%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1000"><div align="right" class="style81"><span class="style82">Copyright © 2011 Adobe Systems Incorporated.&nbsp; &nbsp;</span><span class="style83">All rights reserved.</span></div></td>
+          </tr>
+        </table></td>
+        </tr>
+      <tr>
+        <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="99%" valign="top"><div align="right" class="style22">
+                <div align="right"><span class="style23">Use of this website signifies your agreement to the Terms of Use and Online Privacy Policy</span>.</div>
+            </div></td>
+            <td width="1%" valign="top"><img src="images/spacer.gif" width="13" height="10" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+   </tr>
+  <tr>
+    <td colspan="2" valign="top" bgcolor="#191919"><img src="images/spacer.gif" width="55" height="60" /></td>
+  </tr>
+</table>
+
+
+
+<map name="Map" id="Map"><area shape="rect" coords="948,12,985,57" href="http://www.adobe.com" target="_blank" />
+</map></body>
+</html>

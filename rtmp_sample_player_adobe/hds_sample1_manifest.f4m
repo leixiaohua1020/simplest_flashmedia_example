@@ -1,0 +1,13 @@
+<manifest xmlns="http://ns.adobe.com/f4m/2.0">
+
+<media href="http://localhost/hds-vod/sample1_150kbps.f4v.f4m" bitrate="150"/>
+  
+<media href="http://localhost/hds-vod/sample1_500kbps.f4v.f4m" bitrate="500"/>
+
+<media href="http://localhost/hds-vod/sample1_700kbps.f4v.f4m" bitrate="700"/>
+
+<media href="http://localhost/hds-vod/sample1_1000kbps.f4v.f4m" bitrate="1000"/>
+
+<media href="http://localhost/hds-vod/sample1_1500kbps.f4v.f4m" bitrate="1500"/>
+
+</manifest>
